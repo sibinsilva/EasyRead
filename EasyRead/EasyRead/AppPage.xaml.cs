@@ -28,10 +28,10 @@ namespace EasyRead
     public partial class AppPage : ContentPage
     {
         Image image = new Image();
-        static string subscriptionKey = "fc44d789fe3845c09da5f67eed91518f";
+        static string subscriptionKey = AppSettings.Default.SubscriptionKey;
         static string endpoint = "https://easyread.cognitiveservices.azure.com/";
         static string uriBase = endpoint + "vision/v2.1/ocr";
-        static string Gkey = "AIzaSyBL2Sl6mFmyOQaFck4i_sbmu1AZSUK3IME";
+        static string Gkey = AppSettings.Default.Gkey;
         public AssetManager Assets { get; private set; }
 
         public AppPage()
