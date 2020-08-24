@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EasyRead.AppPage">
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand">
+                <Image x:Name="imgBanner"></Image>
+                <Image x:Name="imgSelected" HeightRequest="200"></Image>
+                <Button x:Name="takePhoto" Text="Capture Photo" BackgroundColor="#2196F3" Padding="24" CornerRadius="0" TextColor="White" VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" Clicked="takePhoto_Clicked"/>
+                <Button x:Name="pickPhoto" Text="Upload Image" BackgroundColor="#2196F3" Padding="24" CornerRadius="0" TextColor="White" VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" Clicked="pickPhoto_Clicked"/>
+                <Label Text="Result :" TextColor="Black" FontSize="Medium"></Label>
+                <Label x:Name="lblResult"></Label>
+                <Label Text="Detected Language :" TextColor="Black" FontSize="Medium"></Label>
+                <Label x:Name="DetectedLanguageLabel" ></Label>
+                <Label Text="Converted String : " TextColor="Black" FontSize="Medium"></Label>
+                <Label x:Name="TranslatedTextLabel" ></Label>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>
