@@ -28,10 +28,10 @@ namespace EasyRead
     public partial class AppPage : ContentPage
     {
         Image image = new Image();
-        static string subscriptionKey = Settings.SubscriptionKey;
+        static string subscriptionKey = AppSettings.Default.SubscriptionKey;
         static string endpoint = "https://easyread.cognitiveservices.azure.com/";
         static string uriBase = endpoint + "vision/v2.1/ocr";
-        static string Gkey = Settings.Gkey;
+        static string Gkey = AppSettings.Default.Gkey;
         public AssetManager Assets { get; private set; }
 
         public AppPage()
@@ -52,7 +52,7 @@ namespace EasyRead
             {
                 var file = await Plugin.Media.CrossMedia.Current.PickPhotoAsync(new Plugin.Media.Abstractions.PickMediaOptions
                 {
-                    PhotoSize = Plugin.Media.Abstractions.PhotoSize.Large
+                    PhotoSize = Plugin.Media.Abstractions.PhotoSize.Medium
                 });
                 if (file == null)
                     return;
@@ -62,6 +62,8 @@ namespace EasyRead
                     var stream = file.GetStream();
                     return stream;
                 });
+                //GetImageDescription(file.GetStream());
+
                 file.Dispose();
 
             }
@@ -81,15 +83,11 @@ namespace EasyRead
                     await DisplayAlert("No Camera", "No camera available.", "OK");
                     return;
                 }
-
                 var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
                 {
                     Directory = "Sample",
-                    Name = "xamarin.jpg",
-                    DefaultCamera = Plugin.Media.Abstractions.CameraDevice.Rear,
-                    PhotoSize = Plugin.Media.Abstractions.PhotoSize.Large
-                    
-            });
+                    Name = "xamarin.jpg"
+                });
                 if (file == null)
                     return;
                 MakeOCRRequest(file.Path);
@@ -98,6 +96,9 @@ namespace EasyRead
                     var stream = file.GetStream();
                     return stream;
                 });
+
+                //GetImageDescription(file.GetStream());
+
                 file.Dispose();
 
             }
@@ -112,14 +113,9 @@ namespace EasyRead
             try
             {
                 string textresponse = "";
-                lblImgText.IsVisible = true;
-                lblLang.IsVisible = true;
-                lblTranslatedText.IsVisible = true;
                 if (lblResult.Text != "")
                 {
                     lblResult.Text = "";
-                    DetectedLanguageLabel.Text = "";
-                    TranslatedTextLabel.Text = "";
                 }
                 HttpClient client = new HttpClient();
 
@@ -207,6 +203,7 @@ namespace EasyRead
         {
 
             GoogleTranslate google = new GoogleTranslate(Gkey);
+            Language sourcelang;
             var language = google.DetectLanguage(text);
             if (language.Count >= 1)
             {
