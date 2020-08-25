@@ -28,10 +28,10 @@ namespace EasyRead
     public partial class AppPage : ContentPage
     {
         Image image = new Image();
-        static string subscriptionKey = AppSettings.Default.SubscriptionKey;
+        static string subscriptionKey = Settings.SubscriptionKey;
         static string endpoint = "https://easyread.cognitiveservices.azure.com/";
         static string uriBase = endpoint + "vision/v2.1/ocr";
-        static string Gkey = AppSettings.Default.Gkey;
+        static string Gkey = Settings.GKey;
         public AssetManager Assets { get; private set; }
 
         public AppPage()
@@ -52,7 +52,7 @@ namespace EasyRead
             {
                 var file = await Plugin.Media.CrossMedia.Current.PickPhotoAsync(new Plugin.Media.Abstractions.PickMediaOptions
                 {
-                    PhotoSize = Plugin.Media.Abstractions.PhotoSize.Medium
+                    PhotoSize = Plugin.Media.Abstractions.PhotoSize.Large
                 });
                 if (file == null)
                     return;
@@ -86,7 +86,9 @@ namespace EasyRead
                 var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
                 {
                     Directory = "Sample",
-                    Name = "xamarin.jpg"
+                    Name = "xamarin.jpg",
+                    PhotoSize = Plugin.Media.Abstractions.PhotoSize.Large,
+                    DefaultCamera = Plugin.Media.Abstractions.CameraDevice.Rear
                 });
                 if (file == null)
                     return;
@@ -113,9 +115,15 @@ namespace EasyRead
             try
             {
                 string textresponse = "";
+                lblImageText.IsVisible = true;
+                lblLang.IsVisible = true;
+                lblTranslated.IsVisible = true;
+
                 if (lblResult.Text != "")
                 {
                     lblResult.Text = "";
+                    TranslatedTextLabel.Text = "";
+                    DetectedLanguageLabel.Text = "";
                 }
                 HttpClient client = new HttpClient();
 

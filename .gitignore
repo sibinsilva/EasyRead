@@ -340,3 +340,4 @@ ASALocalRun/
 healthchecksdb
 /EasyRead/EasyRead/AppSettings.settings
 /EasyRead/EasyRead/AppSettings.Designer.cs
+/EasyRead/EasyRead/Settings.cs
