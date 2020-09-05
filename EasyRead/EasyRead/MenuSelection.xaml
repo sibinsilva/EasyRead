@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EasyRead.MenuSelection">
+    <ContentPage.Content>
+        <StackLayout>
+            <Button Text="Text Detection" BackgroundColor="#2196F3" TextColor="White" WidthRequest="150" HeightRequest="150" CornerRadius="2" Clicked="Text_Detection_Clicked"/>
+            <Button Text="Safe Search Detection" BackgroundColor="#2196F3" TextColor="White" WidthRequest="150" HeightRequest="150"  CornerRadius="2" Clicked="Safe_Detection_Clicked"/>
+            <Button Text="Logo Detection" BackgroundColor="#2196F3" TextColor="White" WidthRequest="150" HeightRequest="150"  CornerRadius="2" Clicked="Logo_Detection_Clicked"/>
+            <Button Text="Landmark Detection" BackgroundColor="#2196F3" TextColor="White" WidthRequest="150" HeightRequest="150"  CornerRadius="2" Clicked="Landmark_Detection_Clicked"/>
+            <Button Text="Label Detection" BackgroundColor="#2196F3" TextColor="White" WidthRequest="150" HeightRequest="150" CornerRadius="2" Clicked="Label_Detection_Clicked"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

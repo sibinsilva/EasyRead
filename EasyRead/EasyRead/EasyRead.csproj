@@ -34,7 +34,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Google.Apis.Vision.v1" Version="1.49.0.2039" />
     <PackageReference Include="Google.Cloud.Translate.V3" Version="2.0.0" />
+    <PackageReference Include="Google.Cloud.Vision.V1" Version="2.0.0" />
     <PackageReference Include="Microsoft.Azure.Search.Service" Version="10.1.0" />
     <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="3.7.0" />
     <PackageReference Include="Nancy" Version="2.0.0" />
@@ -67,6 +69,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Update="AppPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Selection.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>

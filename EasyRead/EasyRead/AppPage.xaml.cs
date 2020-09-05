@@ -13,7 +13,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
-using static EasyRead.JsonResult;
+using static EasyRead.MicrosoftVisionJsonResult;
 using System.Collections.Generic;
 using System.Net;
 using System.Text;
@@ -32,8 +32,6 @@ namespace EasyRead
         static string endpoint = "https://easyread.cognitiveservices.azure.com/";
         static string uriBase = endpoint + "vision/v2.1/ocr";
         static string Gkey = Settings.GKey;
-        public AssetManager Assets { get; private set; }
-
         public AppPage()
         {
             InitializeComponent();
@@ -41,7 +39,7 @@ namespace EasyRead
 
         protected override bool OnBackButtonPressed()
         {
-            App.Current.MainPage = new MainPage();
+            App.Current.MainPage = new MenuSelection();
             return true;
         }
 
@@ -56,14 +54,99 @@ namespace EasyRead
                 });
                 if (file == null)
                     return;
-                MakeOCRRequest(file.Path);
+                //MakeOCRRequest(file.Path);
+                var imagefilestream = ImagetoBasestr(file.Path);
+                GoogleVision googleVision = new GoogleVision(Settings.GKey);
+                var result = await googleVision.RequestAnotate(imagefilestream);
                 imgSelected.Source = Xamarin.Forms.ImageSource.FromStream(() =>
                 {
-                    var stream = file.GetStream();
+                    var stream = file.GetStream();  
                     return stream;
                 });
-                //GetImageDescription(file.GetStream());
-
+                if (Settings.mSelection == Settings.TEXT_DETECTION)
+                {
+                    EnableLabels();
+                    if (result != null && result != "" && !result.Contains("(null)"))
+                    {
+                        this.lblResult.Text = result;
+                        TranslateWords(result);
+                    }
+                    else
+                    {
+                        lblLang.IsVisible = false;
+                        lblTranslated.IsVisible = false;
+                        this.lblResult.Text = "Unable to Identify Texts";
+                    }
+                    
+                }
+                else if (Settings.mSelection == Settings.LOGO_DETECTION)
+                {
+                    if(this.lblResult.Text !="")
+                    {
+                        this.lblResult.Text = "";
+                    }
+                    this.lblImageText.Text = "Logo Name: ";
+                    this.lblImageText.IsVisible = true;
+                    if (result != null && result != "" && !result.Contains("(null)"))
+                    {
+                        this.lblResult.Text = result;
+                    }
+                    else
+                    {
+                        this.lblResult.Text = "Unable to Identify Logo";
+                    }
+                }
+                else if (Settings.mSelection == Settings.LANDMARK_DETECTION)
+                {
+                    if (this.lblResult.Text != "")
+                    {
+                        this.lblResult.Text = "";
+                    }
+                    this.lblImageText.Text = "Place Name: ";
+                    this.lblImageText.IsVisible = true;
+                    if (result != null && result != "" && !result.Contains("(null)"))
+                    {
+                        this.lblResult.Text = result;
+                    }
+                    else
+                    {
+                        this.lblResult.Text = "Unable to Identify Landmark";
+                    }
+                }
+                else if (Settings.mSelection == Settings.LABEL_DETECTION)
+                {
+                    if (this.lblResult.Text != "")
+                    {
+                        this.lblResult.Text = "";
+                    }
+                    this.lblImageText.Text = "Picture Details: ";
+                    this.lblImageText.IsVisible = true;
+                    if (result != null && result != "" && !result.Contains("(null)"))
+                    {
+                        this.lblResult.Text = result;
+                    }
+                    else
+                    {
+                        this.lblResult.Text = "Unable to Identify Details";
+                    }
+                }
+                else if (Settings.mSelection == Settings.SAFE_SEARCH_DETECTION)
+                {
+                    if (this.lblResult.Text != "")
+                    {
+                        this.lblResult.Text = "";
+                    }
+                    this.lblImageText.Text = "Picture Details: ";
+                    this.lblImageText.IsVisible = true;
+                    if (result != null && result != "" && !result.Contains("(null)"))
+                    {
+                        this.lblResult.Text = result;
+                    }
+                    else
+                    {
+                        this.lblResult.Text = "Unable to Identify Details";
+                    }
+                }
                 file.Dispose();
 
             }
@@ -71,6 +154,12 @@ namespace EasyRead
             {
                 await DisplayAlert("Error", ex.Message, "OK");
             }
+        }
+
+        private string ImagetoBasestr(string Path)
+        {
+            byte[] imageArray = System.IO.File.ReadAllBytes(Path);
+            return Convert.ToBase64String(imageArray);
         }
 
         private async void takePhoto_Clicked(object sender, EventArgs e)
@@ -92,13 +181,18 @@ namespace EasyRead
                 });
                 if (file == null)
                     return;
-                MakeOCRRequest(file.Path);
+                //MakeOCRRequest(file.Path);
+                var imagefilestream = ImagetoBasestr(file.Path);
+                GoogleVision googleVision = new GoogleVision(Settings.GKey);
+                var result = await googleVision.RequestAnotate(imagefilestream);
                 imgSelected.Source = Xamarin.Forms.ImageSource.FromStream(() =>
                 {
                     var stream = file.GetStream();
                     return stream;
                 });
-
+                EnableLabels();
+                this.lblResult.Text = result;
+                TranslateWords(result);
                 //GetImageDescription(file.GetStream());
 
                 file.Dispose();
@@ -206,12 +300,29 @@ namespace EasyRead
             }
         }
 
+        private void EnableLabels()
+        {
+            lblImageText.IsVisible = true;
+            lblLang.IsVisible = true;
+            lblTranslated.IsVisible = true;
+
+            if (lblResult.Text != "")
+            {
+                lblResult.Text = "";
+                TranslatedTextLabel.Text = "";
+                DetectedLanguageLabel.Text = "";
+            }
+        }
 
         private void TranslateWords(string text)
         {
 
             GoogleTranslate google = new GoogleTranslate(Gkey);
-            Language sourcelang;
+            google.PrettyPrint = true;
+            if(text.Length > 2000)
+            {
+                google.LargeQuery = true;
+            }
             var language = google.DetectLanguage(text);
             if (language.Count >= 1)
             {
@@ -233,7 +344,6 @@ namespace EasyRead
                     TranslatedTextLabel.Text = result[0].TranslatedText;
                 }
             }
-
         }
     }
 }

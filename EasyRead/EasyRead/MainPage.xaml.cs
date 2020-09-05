@@ -22,7 +22,7 @@ namespace EasyRead
         {
             if (await CheckInternetConnection())
             {
-                App.Current.MainPage = new AppPage();
+                App.Current.MainPage = new MenuSelection();
             }
             else
             {

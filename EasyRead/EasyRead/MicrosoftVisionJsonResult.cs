@@ -4,7 +4,7 @@ using System.Text;
 
 namespace EasyRead
 {
-    class JsonResult
+    class MicrosoftVisionJsonResult
     {
         
         public class Word
