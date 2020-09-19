@@ -8,7 +8,9 @@ namespace EasyRead
     {
         public static string FindLanguageName(string str)
         {
-            if (str == "af")
+            if (str == "am")
+                return "Amharic";
+            else if (str == "af")
                 return "Afrikaans";
             else if (str == "sq")
                 return "Albanian";
@@ -18,22 +20,28 @@ namespace EasyRead
                 return "Belarusian";
             else if (str == "bg")
                 return "Bulgarian";
+            else if (str == "bn")
+                return "Bengali";
             else if (str == "ca")
                 return "Catalan";
             else if (str == "zh")
                 return "ChineseSimplified";
             else if (str == "zh-TW")
-                return "ChineseTraditional";
+                return "Chinese(Taiwan)";
             else if (str == "hr")
                 return "Croatian";
+            else if (str == "gu")
+                return "Gujarati";
             else if (str == "cs")
                 return "Czech";
             else if (str == "da")
                 return "Danish";
             else if (str == "nl")
                 return "Dutch";
+            else if (str == "en-GB")
+                return "English(UK)";
             else if (str == "en")
-                return "English";
+                return "English(US)";
             else if (str == "eo")
                 return "Esperanto";
             else if (str == "et")
@@ -70,12 +78,16 @@ namespace EasyRead
                 return "Japanese";
             else if (str == "ko")
                 return "Korean";
+            else if (str == "kn")
+                return "Kannada";
             else if (str == "lv")
                 return "Latvian";
             else if (str == "lt")
                 return "Lithuanian";
             else if (str == "mk")
                 return "Macedonian";
+            else if (str == "ml")
+                return "Malayalam";
             else if (str == "ms")
                 return "Malay";
             else if (str == "mt")
@@ -86,8 +98,10 @@ namespace EasyRead
                 return "Persian";
             else if (str == "pl")
                 return "Polish";
-            else if (str == "pt")
-                return "Portuguese";
+            else if (str == "pt-BR")
+                return "Portuguese(Brazil)";
+            else if (str == "pt-PT")
+                return "Portuguese(Portugal)";
             else if (str == "ro")
                 return "Romanian";
             else if (str == "ru")
@@ -106,8 +120,14 @@ namespace EasyRead
                 return "Swedish";
             else if (str == "th")
                 return "Thai";
+            else if (str == "ta")
+                return "Tamil";
+            else if (str == "te")
+                return "Telugu";
             else if (str == "tr")
                 return "Turkish";
+            else if (str == "ur")
+                return "Urdu";
             else if (str == "uk")
                 return "Ukrainian";
             else if (str == "vi")

@@ -63,96 +63,101 @@ namespace EasyRead
                     var stream = file.GetStream();  
                     return stream;
                 });
-                if (Settings.mSelection == Settings.TEXT_DETECTION)
-                {
-                    EnableLabels();
-                    if (result != null && result != "" && !result.Contains("(null)"))
-                    {
-                        this.lblResult.Text = result;
-                        TranslateWords(result);
-                    }
-                    else
-                    {
-                        lblLang.IsVisible = false;
-                        lblTranslated.IsVisible = false;
-                        this.lblResult.Text = "Unable to Identify Texts";
-                    }
-                    
-                }
-                else if (Settings.mSelection == Settings.LOGO_DETECTION)
-                {
-                    if(this.lblResult.Text !="")
-                    {
-                        this.lblResult.Text = "";
-                    }
-                    this.lblImageText.Text = "Logo Name: ";
-                    this.lblImageText.IsVisible = true;
-                    if (result != null && result != "" && !result.Contains("(null)"))
-                    {
-                        this.lblResult.Text = result;
-                    }
-                    else
-                    {
-                        this.lblResult.Text = "Unable to Identify Logo";
-                    }
-                }
-                else if (Settings.mSelection == Settings.LANDMARK_DETECTION)
-                {
-                    if (this.lblResult.Text != "")
-                    {
-                        this.lblResult.Text = "";
-                    }
-                    this.lblImageText.Text = "Place Name: ";
-                    this.lblImageText.IsVisible = true;
-                    if (result != null && result != "" && !result.Contains("(null)"))
-                    {
-                        this.lblResult.Text = result;
-                    }
-                    else
-                    {
-                        this.lblResult.Text = "Unable to Identify Landmark";
-                    }
-                }
-                else if (Settings.mSelection == Settings.LABEL_DETECTION)
-                {
-                    if (this.lblResult.Text != "")
-                    {
-                        this.lblResult.Text = "";
-                    }
-                    this.lblImageText.Text = "Picture Details: ";
-                    this.lblImageText.IsVisible = true;
-                    if (result != null && result != "" && !result.Contains("(null)"))
-                    {
-                        this.lblResult.Text = result;
-                    }
-                    else
-                    {
-                        this.lblResult.Text = "Unable to Identify Details";
-                    }
-                }
-                else if (Settings.mSelection == Settings.SAFE_SEARCH_DETECTION)
-                {
-                    if (this.lblResult.Text != "")
-                    {
-                        this.lblResult.Text = "";
-                    }
-                    this.lblImageText.Text = "Picture Details: ";
-                    this.lblImageText.IsVisible = true;
-                    if (result != null && result != "" && !result.Contains("(null)"))
-                    {
-                        this.lblResult.Text = result;
-                    }
-                    else
-                    {
-                        this.lblResult.Text = "Unable to Identify Details";
-                    }
-                }
+                ShowResult(result);
                 file.Dispose();
 
             }
             catch (Exception ex)
             {
                 await DisplayAlert("Error", ex.Message, "OK");
+            }
+        }
+
+        private void ShowResult(string result)
+        {
+            if (Settings.mSelection == Settings.TEXT_DETECTION)
+            {
+                EnableLabels();
+                if (result != null && result != "" && !result.Contains("(null)"))
+                {
+                    this.lblResult.Text = result;
+                    TranslateWords(result);
+                }
+                else
+                {
+                    lblLang.IsVisible = false;
+                    lblTranslated.IsVisible = false;
+                    this.lblResult.Text = "Unable to Identify Texts";
+                }
+
+            }
+            else if (Settings.mSelection == Settings.LOGO_DETECTION)
+            {
+                if (this.lblResult.Text != "")
+                {
+                    this.lblResult.Text = "";
+                }
+                this.lblImageText.Text = "Logo Name: ";
+                this.lblImageText.IsVisible = true;
+                if (result != null && result != "" && !result.Contains("(null)"))
+                {
+                    this.lblResult.Text = result;
+                }
+                else
+                {
+                    this.lblResult.Text = "Unable to Identify Logo";
+                }
+            }
+            else if (Settings.mSelection == Settings.LANDMARK_DETECTION)
+            {
+                if (this.lblResult.Text != "")
+                {
+                    this.lblResult.Text = "";
+                }
+                this.lblImageText.Text = "Place Name: ";
+                this.lblImageText.IsVisible = true;
+                if (result != null && result != "" && !result.Contains("(null)"))
+                {
+                    this.lblResult.Text = result;
+                }
+                else
+                {
+                    this.lblResult.Text = "Unable to Identify Landmark";
+                }
+            }
+            else if (Settings.mSelection == Settings.LABEL_DETECTION)
+            {
+                if (this.lblResult.Text != "")
+                {
+                    this.lblResult.Text = "";
+                }
+                this.lblImageText.Text = "Picture Details: ";
+                this.lblImageText.IsVisible = true;
+                if (result != null && result != "" && !result.Contains("(null)"))
+                {
+                    this.lblResult.Text = result;
+                }
+                else
+                {
+                    this.lblResult.Text = "Unable to Identify Details";
+                }
+            }
+            else if (Settings.mSelection == Settings.SAFE_SEARCH_DETECTION)
+            {
+                if (this.lblResult.Text != "")
+                {
+                    this.lblResult.Text = "";
+                }
+                this.lblImageText.Text = "Picture Details: ";
+                this.lblImageText.IsVisible = true;
+                if (result != null && result != "" && !result.Contains("(null)"))
+                {
+                    this.lblResult.Text = result;
+                }
+                else
+                {
+                    this.lblResult.Text = "Unable to Identify Details";
+                }
             }
         }
 
@@ -190,11 +195,7 @@ namespace EasyRead
                     var stream = file.GetStream();
                     return stream;
                 });
-                EnableLabels();
-                this.lblResult.Text = result;
-                TranslateWords(result);
-                //GetImageDescription(file.GetStream());
-
+                ShowResult(result);
                 file.Dispose();
 
             }
