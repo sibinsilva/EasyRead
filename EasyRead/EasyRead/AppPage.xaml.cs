@@ -39,7 +39,7 @@ namespace EasyRead
 
         protected override bool OnBackButtonPressed()
         {
-            App.Current.MainPage = new MenuSelection();
+            App.Current.MainPage = new MainPage();
             return true;
         }
 

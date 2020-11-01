@@ -44,7 +44,7 @@ namespace EasyRead
                             ""features"":[
                                 {{
                                     ""maxResults"": ""50"",   
-                                    ""type"": ""{Settings.mSelection}""
+                                    ""type"": ""{Settings.TEXT_DETECTION}""
                                 }}
                             ]
                         }}
@@ -58,7 +58,7 @@ namespace EasyRead
                         new StringContent(myJson, Encoding.UTF8, "application/json"));
                     
                     responseStr = await response.Content.ReadAsStringAsync();
-
+                    Settings.mSelection = Settings.TEXT_DETECTION;
                     result = ConvertResponseToResult(responseStr);
                     
                     return result;
