@@ -1,24 +1,34 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:maps1="clr-namespace:Xamarin.Essentials;assembly=Xamarin.Essentials"
-             x:Class="EasyRead.AppPage">
+             x:Class="EasyRead.AppPage" BackgroundColor="White">
     <ContentPage.Content>
         <ScrollView>
             <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand">
+                <Label x:Name="Header" Text="EazyRead" TextColor="#2196F3" FontSize="50" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"></Label>
                 <Image x:Name="imgBanner"></Image>
                 <Image x:Name="imgSelected" HeightRequest="200"></Image>
-                <Button x:Name="takePhoto" Text="Capture Photo" BackgroundColor="#2196F3" Padding="24" CornerRadius="0" TextColor="White" VerticalOptions="CenterAndExpand" 
+                <Button x:Name="takePhoto" Text="Capture Photo" BackgroundColor="#2196F3" Padding="24" CornerRadius="20" TextColor="White" VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" Clicked="takePhoto_Clicked"/>
-                <Button x:Name="pickPhoto" Text="Upload Image" BackgroundColor="#2196F3" Padding="24" CornerRadius="0" TextColor="White" VerticalOptions="CenterAndExpand" 
+                <Button x:Name="pickPhoto" Text="Upload Image" BackgroundColor="#2196F3" Padding="24" CornerRadius="20" TextColor="White" VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" Clicked="pickPhoto_Clicked"/>
-                <Label x:Name="lblImageText" Text="Image Text :" IsVisible="false" TextColor="Black" FontSize="Medium"></Label>
-                <Label x:Name="lblResult"></Label>
-                <Button x:Name="Play" Text="Play"  BackgroundColor="#2196F3" Padding="24" CornerRadius="2" IsVisible="false" Clicked="Play_Clicked"/>
-                <Label x:Name="lblLang" Text="Detected Language :" IsVisible="false" TextColor="Black" FontSize="Medium"></Label>
-                <Label x:Name="DetectedLanguageLabel" ></Label>
-                <Label x:Name="lblTranslated" Text="Translated Text : " IsVisible="false" TextColor="Black" FontSize="Medium"></Label>
-                <Label x:Name="TranslatedTextLabel" ></Label>
+                <Label Text="Image Text :" x:Name="lblImageText" IsVisible="false" TextColor="Black" FontSize="Large"></Label>
+                <Frame x:Name="frmImgText" IsVisible="False" OutlineColor="Black" VerticalOptions="FillAndExpand" Margin="10" BackgroundColor="Transparent" Padding="5" >
+                    <Label x:Name="lblResult" TextColor="Black"></Label>
+                </Frame>
+                <Label x:Name="lblLang" Text="Detected Language :" IsVisible="false" TextColor="Black" FontSize="Large"></Label>
+                <Frame x:Name="frmResult" IsVisible="false" OutlineColor="Black" VerticalOptions="FillAndExpand" Margin="10" BackgroundColor="Transparent" Padding="5" >
+                    <StackLayout>
+                        <Label x:Name="DetectedLanguageLabel" TextColor="Black" ></Label>
+                    </StackLayout>
+                </Frame>
+                <Label x:Name="lblTranslated" Text="Translated Text : " IsVisible="false" TextColor="Black" FontSize="Large"></Label>
+                <Frame x:Name="frmTranslatedResult" IsVisible="false" OutlineColor="Black" VerticalOptions="FillAndExpand" Margin="10" BackgroundColor="Transparent" Padding="5" >
+                    <StackLayout>
+                        <Label x:Name="TranslatedTextLabel" TextColor="Black" ></Label>
+                    </StackLayout>
+                </Frame>
+                <Button x:Name="Play" Text="Listen"  BackgroundColor="#2196F3" WidthRequest="80" HeightRequest="80" CornerRadius="40" VerticalOptions="Center" HorizontalOptions="Center"  IsVisible="false" Clicked="Play_Clicked"/>
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

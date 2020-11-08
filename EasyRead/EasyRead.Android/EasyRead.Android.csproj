@@ -81,6 +81,9 @@
     <PackageReference Include="RestSharp">
       <Version>106.11.7</Version>
     </PackageReference>
+    <PackageReference Include="Xam.Plugin.Iconize">
+      <Version>3.5.0.129</Version>
+    </PackageReference>
     <PackageReference Include="Xam.Plugin.Media">
       <Version>5.0.1</Version>
     </PackageReference>

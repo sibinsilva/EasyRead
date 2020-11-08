@@ -83,6 +83,9 @@ namespace EasyRead
                 {
                     lblLang.IsVisible = false;
                     lblTranslated.IsVisible = false;
+                    frmTranslatedResult.IsVisible = false;
+                    frmResult.IsVisible = false;
+                    Play.IsVisible = false;
                     this.lblResult.Text = "Unable to Identify Texts";
                     AudioFileText = "Unable to Identify Texts";
                 }
@@ -303,6 +306,9 @@ namespace EasyRead
             lblImageText.IsVisible = true;
             lblLang.IsVisible = true;
             lblTranslated.IsVisible = true;
+            frmImgText.IsVisible = true;
+            frmResult.IsVisible = true;
+            frmTranslatedResult.IsVisible = true;
             Play.IsVisible = true;
             if (lblResult.Text != "")
             {
