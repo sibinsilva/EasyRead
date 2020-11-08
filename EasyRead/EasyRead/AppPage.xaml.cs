@@ -353,9 +353,16 @@ namespace EasyRead
             }
             return result[0].TranslatedText;
         }
-        private void Play_Clicked(object sender, EventArgs e)
+        private async void Play_Clicked(object sender, EventArgs e)
          {
-            TextToSpeech.SpeakAsync(AudioFileText);
+            //var locales = await TextToSpeech.GetLocalesAsync();
+            //var settings = new SpeechOptions()
+            //{
+            //    Volume = .75f,
+            //    Pitch = 1.8f,
+            //    Locale = locales.First(x=> x.Language == "th")
+            //};
+            await TextToSpeech.SpeakAsync(AudioFileText);
         }
     }
 }
