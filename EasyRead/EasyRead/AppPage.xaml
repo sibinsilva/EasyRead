@@ -14,6 +14,7 @@
                 HorizontalOptions="CenterAndExpand" Clicked="pickPhoto_Clicked"/>
                 <Label x:Name="lblImageText" Text="Image Text :" IsVisible="false" TextColor="Black" FontSize="Medium"></Label>
                 <Label x:Name="lblResult"></Label>
+                <Button x:Name="Play" Text="Play"  BackgroundColor="#2196F3" Padding="24" CornerRadius="2" IsVisible="false" Clicked="Play_Clicked"/>
                 <Label x:Name="lblLang" Text="Detected Language :" IsVisible="false" TextColor="Black" FontSize="Medium"></Label>
                 <Label x:Name="DetectedLanguageLabel" ></Label>
                 <Label x:Name="lblTranslated" Text="Translated Text : " IsVisible="false" TextColor="Black" FontSize="Medium"></Label>

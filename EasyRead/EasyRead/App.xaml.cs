@@ -1,5 +1,4 @@
-﻿using System;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace EasyRead
@@ -8,8 +7,7 @@ namespace EasyRead
     {
         public App()
         {
-            InitializeComponent();
-
+            InitializeComponent(); 
             MainPage = new MainPage();
         }
 

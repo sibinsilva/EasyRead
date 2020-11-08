@@ -8,19 +8,14 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Image = Xamarin.Forms.Image;
 using Microsoft.CodeAnalysis.Diagnostics;
-using Microsoft.Azure.Search.Models;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using static EasyRead.MicrosoftVisionJsonResult;
 using System.Collections.Generic;
-using System.Net;
-using System.Text;
-using Nancy.Json;
-using Google.Cloud.Translate.V3;
-using Google.Api.Gax.ResourceNames;
 using GoogleTranslateNet;
+using Xamarin.Essentials;
 
 namespace EasyRead
 {
@@ -32,6 +27,7 @@ namespace EasyRead
         static string endpoint = "https://easyread.cognitiveservices.azure.com/";
         static string uriBase = endpoint + "vision/v2.1/ocr";
         static string Gkey = Settings.GKey;
+        static string AudioFileText = null;
         public AppPage()
         {
             InitializeComponent();
@@ -81,13 +77,14 @@ namespace EasyRead
                 if (result != null && result != "" && !result.Contains("(null)"))
                 {
                     this.lblResult.Text = result;
-                    TranslateWords(result);
+                    AudioFileText = TranslateWords(result);
                 }
                 else
                 {
                     lblLang.IsVisible = false;
                     lblTranslated.IsVisible = false;
                     this.lblResult.Text = "Unable to Identify Texts";
+                    AudioFileText = "Unable to Identify Texts";
                 }
 
             }
@@ -279,7 +276,7 @@ namespace EasyRead
                             }
                         }
                         textresponse = lblResult.Text;
-                        TranslateWords(textresponse);
+                        var words = TranslateWords(textresponse);
                     }
                 }
             }
@@ -306,7 +303,7 @@ namespace EasyRead
             lblImageText.IsVisible = true;
             lblLang.IsVisible = true;
             lblTranslated.IsVisible = true;
-
+            Play.IsVisible = true;
             if (lblResult.Text != "")
             {
                 lblResult.Text = "";
@@ -315,9 +312,9 @@ namespace EasyRead
             }
         }
 
-        private void TranslateWords(string text)
+        private string TranslateWords(string text)
         {
-
+            List<GoogleTranslateNet.Objects.Translation.Translation> result = new List<GoogleTranslateNet.Objects.Translation.Translation>();
             GoogleTranslate google = new GoogleTranslate(Gkey);
             google.PrettyPrint = true;
             if(text.Length > 2000)
@@ -339,12 +336,20 @@ namespace EasyRead
                     DetectedLanguageLabel.Text = LanguagesName.FindLanguageName(lang);
 
                 }
-                var result = google.Translate(Language.Automatic, Language.English, text);
+
+                result = google.Translate(Language.Automatic, Language.English, text);
                 if (result.Count > 0)
                 {
                     TranslatedTextLabel.Text = result[0].TranslatedText;
+                    
                 }
+                
             }
+            return result[0].TranslatedText;
+        }
+        private void Play_Clicked(object sender, EventArgs e)
+         {
+            TextToSpeech.SpeakAsync(AudioFileText);
         }
     }
 }
