@@ -16,19 +16,12 @@ namespace EasyRead
         public MainPage()
         {
             InitializeComponent();
+            App.CheckInternetConnectivity(this.lbl_NoInternet, this);
         }
 
-        private async void Button_ClickedAsync(object sender, EventArgs e)
+        private void Button_ClickedAsync(object sender, EventArgs e)
         {
-            if (await CheckInternetConnection())
-            {
-                App.Current.MainPage = new AppPage();
-            }
-            else
-            {
-                await CheckInternetConnection();
-            }
-
+            App.Current.MainPage = new AppPage();
         }
 
         private async Task<bool> CheckInternetConnection()

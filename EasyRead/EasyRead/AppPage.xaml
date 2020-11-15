@@ -4,7 +4,8 @@
              x:Class="EasyRead.AppPage" BackgroundColor="White">
     <ContentPage.Content>
         <ScrollView>
-            <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand">
+            <StackLayout HorizontalOptions="Fill" VerticalOptions="StartAndExpand">
+                <Label x:Name="lbl_NoInternet" BackgroundColor="Red" TextColor="White" HorizontalTextAlignment="Center" HorizontalOptions="Fill" ></Label>
                 <Label x:Name="Header" Text="EazyRead" TextColor="#2196F3" FontSize="50" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"></Label>
                 <Image x:Name="imgBanner"></Image>
                 <Image x:Name="imgSelected" HeightRequest="200"></Image>
@@ -12,6 +13,11 @@
                 HorizontalOptions="CenterAndExpand" Clicked="takePhoto_Clicked"/>
                 <Button x:Name="pickPhoto" Text="Upload Image" BackgroundColor="#2196F3" Padding="24" CornerRadius="20" TextColor="White" VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" Clicked="pickPhoto_Clicked"/>
+                <AbsoluteLayout HorizontalOptions="Center">
+                    <ActivityIndicator x:Name="activity"  
+                       IsRunning="False"  
+                       />
+                </AbsoluteLayout>
                 <Label Text="Image Text :" x:Name="lblImageText" IsVisible="false" TextColor="Black" FontSize="Large"></Label>
                 <Frame x:Name="frmImgText" IsVisible="False" OutlineColor="Black" VerticalOptions="FillAndExpand" Margin="10" BackgroundColor="Transparent" Padding="5" >
                     <Label x:Name="lblResult" TextColor="Black"></Label>

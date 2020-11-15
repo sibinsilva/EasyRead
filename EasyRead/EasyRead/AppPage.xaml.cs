@@ -16,6 +16,7 @@ using static EasyRead.MicrosoftVisionJsonResult;
 using System.Collections.Generic;
 using GoogleTranslateNet;
 using Xamarin.Essentials;
+using System.Threading;
 
 namespace EasyRead
 {
@@ -28,19 +29,30 @@ namespace EasyRead
         static string uriBase = endpoint + "vision/v2.1/ocr";
         static string Gkey = Settings.GKey;
         static string AudioFileText = null;
+        CancellationTokenSource _speakButtonCancellationTokenSource;
+        bool IsSpeaking = false;
         public AppPage()
         {
             InitializeComponent();
+            App.CheckInternetConnectivity(this.lbl_NoInternet, this);
         }
 
         protected override bool OnBackButtonPressed()
         {
+            if (IsSpeaking)
+            {
+                HandleSpeakCancel();
+            }
             App.Current.MainPage = new MainPage();
             return true;
         }
 
         private async void pickPhoto_Clicked(object sender, EventArgs e)
         {
+            if (IsSpeaking)
+            {
+                HandleSpeakCancel();
+            }
             await CrossMedia.Current.Initialize();
             try
             {
@@ -51,6 +63,7 @@ namespace EasyRead
                 if (file == null)
                     return;
                 //MakeOCRRequest(file.Path);
+                this.activity.IsRunning = true;
                 var imagefilestream = ImagetoBasestr(file.Path);
                 GoogleVision googleVision = new GoogleVision(Settings.GKey);
                 var result = await googleVision.RequestAnotate(imagefilestream);
@@ -71,7 +84,7 @@ namespace EasyRead
 
         private void ShowResult(string result)
         {
-            if (Settings.mSelection == Settings.TEXT_DETECTION)
+            if (Generic.mSelection == Generic.TEXT_DETECTION)
             {
                 EnableLabels();
                 if (result != null && result != "" && !result.Contains("(null)"))
@@ -91,7 +104,7 @@ namespace EasyRead
                 }
 
             }
-            else if (Settings.mSelection == Settings.LOGO_DETECTION)
+            else if (Generic.mSelection == Generic.LOGO_DETECTION)
             {
                 if (this.lblResult.Text != "")
                 {
@@ -108,7 +121,7 @@ namespace EasyRead
                     this.lblResult.Text = "Unable to Identify Logo";
                 }
             }
-            else if (Settings.mSelection == Settings.LANDMARK_DETECTION)
+            else if (Generic.mSelection == Generic.LANDMARK_DETECTION)
             {
                 if (this.lblResult.Text != "")
                 {
@@ -125,7 +138,7 @@ namespace EasyRead
                     this.lblResult.Text = "Unable to Identify Landmark";
                 }
             }
-            else if (Settings.mSelection == Settings.LABEL_DETECTION)
+            else if (Generic.mSelection == Generic.LABEL_DETECTION)
             {
                 if (this.lblResult.Text != "")
                 {
@@ -142,7 +155,7 @@ namespace EasyRead
                     this.lblResult.Text = "Unable to Identify Details";
                 }
             }
-            else if (Settings.mSelection == Settings.SAFE_SEARCH_DETECTION)
+            else if (Generic.mSelection == Generic.SAFE_SEARCH_DETECTION)
             {
                 if (this.lblResult.Text != "")
                 {
@@ -169,6 +182,10 @@ namespace EasyRead
 
         private async void takePhoto_Clicked(object sender, EventArgs e)
         {
+            if (IsSpeaking)
+            {
+                HandleSpeakCancel();
+            }
             await CrossMedia.Current.Initialize();
             try
             {
@@ -187,6 +204,7 @@ namespace EasyRead
                 if (file == null)
                     return;
                 //MakeOCRRequest(file.Path);
+                this.activity.IsRunning = true;
                 var imagefilestream = ImagetoBasestr(file.Path);
                 GoogleVision googleVision = new GoogleVision(Settings.GKey);
                 var result = await googleVision.RequestAnotate(imagefilestream);
@@ -303,6 +321,7 @@ namespace EasyRead
 
         private void EnableLabels()
         {
+            this.activity.IsRunning = false;
             lblImageText.IsVisible = true;
             lblLang.IsVisible = true;
             lblTranslated.IsVisible = true;
@@ -354,15 +373,20 @@ namespace EasyRead
             return result[0].TranslatedText;
         }
         private async void Play_Clicked(object sender, EventArgs e)
-         {
-            //var locales = await TextToSpeech.GetLocalesAsync();
-            //var settings = new SpeechOptions()
-            //{
-            //    Volume = .75f,
-            //    Pitch = 1.8f,
-            //    Locale = locales.First(x=> x.Language == "th")
-            //};
-            await TextToSpeech.SpeakAsync(AudioFileText);
+        {
+            IsSpeaking = true;
+            _speakButtonCancellationTokenSource = new CancellationTokenSource();
+            await TextToSpeech.SpeakAsync(AudioFileText, _speakButtonCancellationTokenSource.Token);
         }
+
+        private async void HandleSpeakCancel()
+        {
+            IsSpeaking = false;
+            if (_speakButtonCancellationTokenSource?.IsCancellationRequested ?? true)
+                return;
+
+            _speakButtonCancellationTokenSource.Cancel();
+        }
+
     }
 }

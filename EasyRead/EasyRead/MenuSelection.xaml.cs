@@ -25,7 +25,7 @@ namespace EasyRead
 
         private void Text_Detection_Clicked(object sender, EventArgs e)
         {
-            Settings.mSelection = Settings.TEXT_DETECTION;
+            Generic.mSelection = Generic.TEXT_DETECTION;
             LoadMainApplication();
         }
 
@@ -36,25 +36,25 @@ namespace EasyRead
 
         private void Safe_Detection_Clicked(object sender, EventArgs e)
         {
-            Settings.mSelection = Settings.SAFE_SEARCH_DETECTION;
+            Generic.mSelection = Generic.SAFE_SEARCH_DETECTION;
             LoadMainApplication();
         }
 
         private void Logo_Detection_Clicked(object sender, EventArgs e)
         {
-            Settings.mSelection = Settings.LOGO_DETECTION;
+            Generic.mSelection = Generic.LOGO_DETECTION;
             LoadMainApplication();
         }
 
         private void Label_Detection_Clicked(object sender, EventArgs e)
         {
-            Settings.mSelection = Settings.LABEL_DETECTION;
+            Generic.mSelection = Generic.LABEL_DETECTION;
             LoadMainApplication();
         }
 
         private void Landmark_Detection_Clicked(object sender, EventArgs e)
         {
-            Settings.mSelection = Settings.LANDMARK_DETECTION;
+            Generic.mSelection = Generic.LANDMARK_DETECTION;
             LoadMainApplication();
         }
     }

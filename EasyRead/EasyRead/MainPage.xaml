@@ -4,6 +4,7 @@
              x:Class="EasyRead.MainPage" Background="white">
 
     <StackLayout>
+        <Label x:Name="lbl_NoInternet" BackgroundColor="Red" TextColor="White" HorizontalTextAlignment="Center"></Label>
         <Frame BackgroundColor="#2196F3" Padding="24" CornerRadius="0">
             <Label Text=" Welcome to EazyRead " HorizontalTextAlignment="Center" TextColor="White" FontSize="28"/>
         </Frame>
