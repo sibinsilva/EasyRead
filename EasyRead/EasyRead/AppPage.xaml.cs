@@ -1,16 +1,12 @@
-﻿using Android.Content.Res;
-using Plugin.Media;
+﻿using Plugin.Media;
 using System;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Image = Xamarin.Forms.Image;
-using Microsoft.CodeAnalysis.Diagnostics;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using static EasyRead.MicrosoftVisionJsonResult;
 using System.Collections.Generic;
@@ -379,7 +375,7 @@ namespace EasyRead
             await TextToSpeech.SpeakAsync(AudioFileText, _speakButtonCancellationTokenSource.Token);
         }
 
-        private async void HandleSpeakCancel()
+        private void HandleSpeakCancel()
         {
             IsSpeaking = false;
             if (_speakButtonCancellationTokenSource?.IsCancellationRequested ?? true)
